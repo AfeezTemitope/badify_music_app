@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        h1 { text-align: center; color: #333; }
+        .audio-list { max-width: 800px; margin: 0 auto; }
+        .audio-item { padding: 10px; margin: 5px 0; background-color: white; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        audio { width: 100%; margin-top: 10px; }
+        .scan-button { display: block; margin: 20px auto; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .scan-button:hover { background-color: #0056b3; }
+        #scan-status { text-align: center; color: #555; }
+    </style>
+    <script>
+        async function scanForAudio() {
+            document.getElementById('scan-status').textContent = 'Scanning...';
+            try {
+                const response = await fetch('/scan', { method: 'POST' });
+                const data = await response.json();
+                document.getElementById('scan-status').textContent = `Found ${data.count} audio files.`;
+                window.location.reload();
+            } catch (error) {
+                document.getElementById('scan-status').textContent = 'Scan failed.';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Music App</h1>
+    <button class="scan-button" onclick="scanForAudio()">Scan for Audio Files</button>
+    <p id="scan-status"></p>
+    <div class="audio-list">
+        {% if audio_files %}
+            {% for file in audio_files %}
+                <div class="audio-item">
+                    <p>{{ file }}</p>
+                    <audio controls>
+                        <source src="{{ url_for('play_audio', filename=file) }}" type="audio/{{ file.split('.')[-1] }}">
+                        Your browser does not support audio.
+                    </audio>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No audio files found. Click "Scan for Audio Files" to search.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
