@@ -28,7 +28,7 @@
 # if __name__ == '__main__':
 #     app.run(debug=True)
 from flask import Flask, render_template, send_file, jsonify, request
-from audioScanner import AudioScanner
+from .audioScanner import AudioScanner
 import os
 
 app = Flask(__name__)
