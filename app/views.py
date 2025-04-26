@@ -1,12 +1,12 @@
 from flask import render_template, request, jsonify
-from .cache_setup import cache
+# from .cache_setup import cache
 import requests
 from urllib3.exceptions import NameResolutionError
 
 def index():
     return render_template('index.html')
 
-@cache.memoize(timeout=300)
+# @cache.memoize(timeout=300)
 def search_songs():
     query = request.args.get('q')
     index = request.args.get('index', 0, type=int)
