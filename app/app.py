@@ -1,10 +1,7 @@
-from flask import Flask, render_template
-# from .cache_setup import cache
+from flask import Flask
 from app.urls import register_routes
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
-
-# cache.init_app(app)
 
 register_routes(app)
 
