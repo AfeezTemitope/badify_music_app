@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deezer Api Music Preview</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gradient-to-br from-indigo-900 to-purple-800 min-h-screen text-white">
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold text-center mb-8">Museeq Preview</h1>
+        <form onsubmit="searchSongs(); return false;" class="flex flex-col sm:flex-row gap-4 mb-8 max-w-2xl mx-auto">
+            <input
+                type="text"
+                id="songQuery"
+                placeholder="Enter song or artist"
+                aria-label="Search for songs or artists"
+                class="flex-1 p-3 rounded-lg bg-white/10 text-white placeholder-gray-300 border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-400"
+            >
+            <div class="flex gap-4">
+                <button
+                    type="submit"
+                    aria-label="Search"
+                    class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+                >
+                    Search
+                </button>
+                <button
+                    type="button"
+                    onclick="clearSearch()"
+                    aria-label="Clear search"
+                    class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+                >
+                    Clear
+                </button>
+            </div>
+        </form>
+        <div id="loading" class="hidden text-center">
+            <svg class="animate-spin h-8 w-8 text-purple-400 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+        </div>
+        <div id="results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="pagination" class="text-center mt-8"></div>
+        <audio id="player" controls aria-label="Audio player" class="w-full mt-8 rounded-lg"></audio>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
